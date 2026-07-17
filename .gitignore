@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+mlruns/
+data/*.db
+data/model_info.json
+data/reference.json
+data/drift_report.html
+.env
