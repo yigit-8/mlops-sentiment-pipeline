@@ -51,7 +51,11 @@ def run_drift_report(min_samples: int = 5) -> dict:
 
     if len(current) < min_samples:
         print(f"Not enough current data ({len(current)} rows, need {min_samples}).")
-        return {"drift_detected": False, "reason": "insufficient_data", "count": len(current)}
+        return {
+            "drift_detected": False,
+            "reason": "insufficient_data",
+            "count": len(current),
+        }
 
     report = Report(metrics=[DataDriftPreset()])
     report.run(reference_data=reference, current_data=current)

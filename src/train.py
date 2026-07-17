@@ -17,8 +17,12 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 from transformers import pipeline
 
-REFERENCE_DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "reference.json")
-MODEL_REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "model_info.json")
+REFERENCE_DATA_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data", "reference.json"
+)
+MODEL_REGISTRY_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data", "model_info.json"
+)
 
 EVAL_SAMPLES = [
     {"text": "I love this product, it works perfectly!", "label": "POSITIVE"},

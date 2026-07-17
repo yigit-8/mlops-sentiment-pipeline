@@ -21,7 +21,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from transformers import pipeline
 
-MODEL_INFO_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "model_info.json")
+MODEL_INFO_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data", "model_info.json"
+)
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "predictions.db")
 DEFAULT_MODEL = "distilbert-base-uncased-finetuned-sst-2-english"
 
@@ -43,7 +45,8 @@ def load_model() -> None:
 def init_db() -> None:
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS predictions (
             id        INTEGER PRIMARY KEY AUTOINCREMENT,
             text      TEXT,
@@ -51,7 +54,8 @@ def init_db() -> None:
             score     REAL,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
-    """)
+    """
+    )
     conn.commit()
     conn.close()
 
@@ -121,7 +125,9 @@ def get_logs(limit: int = 20):
         (limit,),
     ).fetchall()
     conn.close()
-    return [{"text": r[0], "label": r[1], "score": r[2], "timestamp": r[3]} for r in rows]
+    return [
+        {"text": r[0], "label": r[1], "score": r[2], "timestamp": r[3]} for r in rows
+    ]
 
 
 @app.get("/stats")
