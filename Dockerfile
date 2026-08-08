@@ -11,7 +11,14 @@ COPY src/ ./src/
 # directory does not exist in a fresh checkout: create it instead of copying.
 RUN mkdir -p data
 
-RUN python -c "from transformers import pipeline; pipeline('sentiment-analysis')"
+# Cache inside /app so the non-root user below can still read it, and name the
+# model explicitly: an unpinned pipeline() caches whatever Hugging Face ships as
+# the default, which is not necessarily the DEFAULT_MODEL that serve.py loads.
+ENV HF_HOME=/app/.cache/huggingface
+RUN python -c "from transformers import pipeline; pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')"
+
+RUN useradd -m -u 1000 appuser && chown -R appuser /app
+USER appuser
 
 EXPOSE 8000
 
