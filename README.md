@@ -1,5 +1,8 @@
 # MLOps Sentiment Pipeline
 
+![CI](https://github.com/yigit-8/mlops-sentiment-pipeline/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 A production-style MLOps pipeline for sentiment analysis, covering experiment tracking, model serving, data drift detection, and CI/CD automation.
 
 ## Architecture
@@ -124,3 +127,8 @@ Every push to `main` triggers two jobs. The first runs the full pytest suite. If
               compares live predictions against the reference set
               generates an HTML drift report
 ```
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE).
+
