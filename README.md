@@ -21,6 +21,27 @@ docker-compose.yml  ->  API + MLflow UI (two containers)
 .github/workflows/  ->  GitHub Actions CI (test + Docker build)
 ```
 
+## Results
+
+The pipeline serves `distilbert-base-uncased-finetuned-sst-2-english` rather than training its own classifier, so the number worth reporting is how that model behaves on a held-out set it was not tuned against. Measured on the **SST-2 validation split (872 sentences)**:
+
+| Metric | Value |
+|---|---|
+| Accuracy | 0.911 |
+| F1 | 0.914 |
+| Mean confidence | 0.983 |
+| Accuracy, positive / negative | 0.930 / 0.890 |
+
+Serving latency, single requests on CPU (no GPU, no batching):
+
+| | Latency |
+|---|---|
+| p50 | 37 ms |
+| p95 | 64 ms |
+| p99 | 80 ms |
+
+A note on the ten sentences in `EVAL_SAMPLES`: they score a perfect 1.00, and that is exactly why they are a smoke test and not a benchmark. They are unambiguously polarised, so they catch a broken model load or a mislabelled output in CI without pretending to measure quality — the 0.911 above is the honest figure.
+
 ## Tech Stack
 
 | Layer | Technology |
