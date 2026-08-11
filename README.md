@@ -40,7 +40,7 @@ Serving latency, single requests on CPU (no GPU, no batching):
 | p95 | 64 ms |
 | p99 | 80 ms |
 
-A note on the ten sentences in `EVAL_SAMPLES`: they score a perfect 1.00, and that is exactly why they are a smoke test and not a benchmark. They are unambiguously polarised, so they catch a broken model load or a mislabelled output in CI without pretending to measure quality — the 0.911 above is the honest figure.
+A note on the ten sentences in `EVAL_SAMPLES`: they score a perfect 1.00, and that is exactly why they are a smoke test and not a benchmark. They are unambiguously polarised, so they catch a broken model load or a mislabelled output in CI without pretending to measure quality. The 0.911 above is the honest figure.
 
 ## Tech Stack
 
