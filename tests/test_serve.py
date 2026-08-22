@@ -41,8 +41,21 @@ def test_analyze_negative(client):
 
 
 def test_analyze_empty_text(client):
+    # Empty text is rejected by the TextRequest min_length constraint, so this
+    # must be a validation error - not "either outcome is fine".
     response = client.post("/analyze", json={"text": ""})
-    assert response.status_code in (200, 422)
+    assert response.status_code == 422
+
+
+def test_analyze_oversized_text(client):
+    response = client.post("/analyze", json={"text": "a" * 5001})
+    assert response.status_code == 422
+
+
+def test_logs_limit_is_bounded(client):
+    assert client.get("/logs", params={"limit": 0}).status_code == 422
+    assert client.get("/logs", params={"limit": 201}).status_code == 422
+    assert client.get("/logs", params={"limit": 200}).status_code == 200
 
 
 def test_logs_returns_list(client):

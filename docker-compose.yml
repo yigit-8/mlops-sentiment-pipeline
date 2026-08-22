@@ -12,11 +12,15 @@ services:
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
-      - mlflow
+      mlflow:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      # The image is python:3.11-slim and never installs curl, so the probe has
+      # to use something already present: the interpreter itself.
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:8000/health', timeout=3).status == 200 else sys.exit(1)"]
       interval: 30s
       timeout: 10s
+      start_period: 20s
       retries: 3
 
   mlflow:
@@ -33,3 +37,9 @@ services:
       --default-artifact-root /mlruns
       --host 0.0.0.0
       --port 5000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:5000/health', timeout=3).status == 200 else sys.exit(1)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5

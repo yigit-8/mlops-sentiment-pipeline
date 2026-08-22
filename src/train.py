@@ -12,8 +12,6 @@ import os
 import time
 
 import mlflow
-import mlflow.sklearn
-import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 from transformers import pipeline
 
