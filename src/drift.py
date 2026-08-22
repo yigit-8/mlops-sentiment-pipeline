@@ -15,7 +15,7 @@ import os
 import sqlite3
 
 import pandas as pd
-from evidently.metric_preset import DataDriftPreset, TextOverviewPreset
+from evidently.metric_preset import DataDriftPreset
 from evidently.report import Report
 
 REFERENCE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "reference.json")
